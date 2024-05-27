@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { InputBox } from "./InputBox";
 import { Button } from "./Button";
-const url = "http://localhost:3000";
 
 export const PropertyForm = ({ onSuccess, isEdit = false, property = {} }) => {
   const [location, setLocation] = useState("");
@@ -52,15 +51,25 @@ export const PropertyForm = ({ onSuccess, isEdit = false, property = {} }) => {
 
     try {
       if (isEdit) {
-        await axios.put(`${url}/api/v1/properties/${property.id}`, payload, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        await axios.put(
+          `${import.meta.env.VITE_API_URL}/api/v1/properties/${property.id}`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
       } else {
-        await axios.post(`${url}/api/v1/properties/`, payload, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/v1/properties/`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
       }
       setLocation("");
       setArea("");

@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-const url = "http://localhost:3000";
 
 const AuthContext = createContext();
 
@@ -26,10 +25,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${url}/api/v1/auth/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
       const { token, user } = response.data;
 
       localStorage.setItem("token", token);

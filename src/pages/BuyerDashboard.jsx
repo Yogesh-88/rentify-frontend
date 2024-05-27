@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { PropertyList } from "../components/PropertyList";
 import { FilterForm } from "../components/FilterForm";
-const url = "http://localhost:3000";
 
 const BuyerDashboard = () => {
   const { isAuthenticated } = useAuth();
@@ -15,16 +14,21 @@ const BuyerDashboard = () => {
   }, [filters]);
 
   const fetchProperties = async () => {
-    const response = await axios.get(`${url}/api/v1/properties`, {
-      params: filters,
-    });
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/api/v1/properties`,
+      {
+        params: filters,
+      }
+    );
     setProperties(response.data);
   };
 
   const handleInterest = async (propertyId) => {
     const token = localStorage.getItem("token");
     await axios.post(
-      `${url}/api/v1/properties/${propertyId}/interested`,
+      `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/properties/${propertyId}/interested`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },

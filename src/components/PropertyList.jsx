@@ -3,7 +3,6 @@ import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { PropertyForm } from "./PropertyForm";
 import { Modal } from "./Modal";
-const url = "http://localhost:3000";
 
 export const PropertyList = ({
   properties,
@@ -24,9 +23,12 @@ export const PropertyList = ({
 
   const handleDelete = async (propertyId) => {
     try {
-      await axios.delete(`${url}/api/v1/properties/${propertyId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/v1/properties/${propertyId}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
       onRefresh();
     } catch (error) {
       console.error(
@@ -40,7 +42,7 @@ export const PropertyList = ({
   const handleEdit = async (propertyId) => {
     try {
       const response = await axios.get(
-        `${url}/api/v1/properties/${propertyId}`,
+        `${import.meta.env.VITE_API_URL}/api/v1/properties/${propertyId}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -65,7 +67,7 @@ export const PropertyList = ({
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        `${url}/api/v1/properties/${propertyId}/like`,
+        `${import.meta.env.VITE_API_URL}/api/v1/properties/${propertyId}/like`,
         {},
         {
           headers: { Authorization: `Bearer ${token}` },

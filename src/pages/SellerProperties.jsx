@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-const url = "http://localhost:3000";
 
 const SellerProperties = () => {
   const [properties, setProperties] = useState([]);
@@ -9,9 +8,12 @@ const SellerProperties = () => {
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const response = await axios.get(`${url}/api/v1/properties/seller`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/v1/properties/seller`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
       setProperties(response.data);
     };
     fetchProperties();

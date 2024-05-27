@@ -7,7 +7,7 @@ import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
-const url = "http://localhost:3000";
+
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,7 +30,10 @@ const Signup = () => {
         role,
       };
 
-      const response = await axios.post(`${url}/api/v1/auth/register`, payload);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/register`,
+        payload
+      );
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify({ email, role }));
       await login(email, password);
